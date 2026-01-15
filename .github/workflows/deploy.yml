@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '20'
           cache: 'npm'
 
       - name: Install dependencies
@@ -33,12 +33,23 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Install SST
+      - name: Clear all SST and Pulumi caches
         run: |
-          curl -fsSL https://sst.dev/install | bash
-          echo "$HOME/.sst/bin" >> $GITHUB_PATH
+          rm -rf ~/.pulumi
+          rm -rf ~/.sst
+          rm -rf ~/.config/sst
+          rm -rf .sst
+          rm -rf node_modules/.cache
+          rm -rf /usr/local/bin/pulumi* || true
+          rm -rf /opt/hostedtoolcache/pulumi || true
+
+      - name: Reinstall SST dependencies
+        run: npx sst install
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
       - name: Deploy with SST
-        run: sst deploy --stage production
+        run: npx sst deploy --stage production --verbose
         env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
           NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
