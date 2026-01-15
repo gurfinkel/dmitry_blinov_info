@@ -26,7 +26,7 @@ export function Hero() {
           <div className="flex-shrink-0">
             <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-border">
               <CldImage
-                src="dmitryblinov_dev/assets/IMG_0487_aufmfg"
+                src="IMG_0487_aufmfg"
                 alt="Dmitry Blinov"
                 width={256}
                 height={256}
