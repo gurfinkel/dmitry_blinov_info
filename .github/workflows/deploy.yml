@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '20.x'
           cache: 'npm'
 
       - name: Install dependencies
@@ -33,7 +33,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Install SST
+        run: |
+          curl -fsSL https://sst.dev/install | bash
+          echo "$HOME/.sst/bin" >> $GITHUB_PATH
+
       - name: Deploy with SST
-        run: npx sst deploy --stage production
+        run: sst deploy --stage production
         env:
           NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
