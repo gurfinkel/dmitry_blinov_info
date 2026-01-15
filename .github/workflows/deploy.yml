@@ -48,6 +48,11 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
 
+      - name: Refresh SST state
+        run: npx sst refresh --stage production || true
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+
       - name: Deploy with SST
         run: npx sst deploy --stage production --verbose
         env:
