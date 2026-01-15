@@ -13,7 +13,7 @@ export default $config({
     new sst.aws.Nextjs("Portfolio", {
       domain: {
         name: "dmitryblinov.dev",
-        dns: sst.aws.dns({ zone: "dmitryblinov.dev" }),
+        dns: sst.aws.dns({ zone: "Z094226329YW4BDFRSV1O" }),
       },
     });
   },
